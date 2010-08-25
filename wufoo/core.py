@@ -161,7 +161,10 @@ class ListResource(Resource):
         try:
             result = []
             for item in content[self.name]:
-                result.append(self._load_instance(item))
+                instance = self._load_instance(item)
+                if instance:
+                    result.append(instance)
+                pass
             return result
         except KeyError:
             raise WufooException, "Key %s not present in response" % self.name

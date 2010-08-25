@@ -77,13 +77,26 @@ class User(core.InstanceResource):
 class Fields(core.ListResource):
     """ A Wufoo Fields resource """
 
+    DEFAULT_FIELDS = ['UpdatedBy', 'LastUpdated', 'CreatedBy', 
+                      'DateCreated', 'EntryId']
+
     def __init__(self, uri, **kwargs):
         name = "Fields"
         uri += "/fields"
         super(Fields, self).__init__(uri, name=name, **kwargs)
 
     def _load_instance(self, d):
+        if "ID" in d and d["ID"] in self.DEFAULT_FIELDS:
+            return None
+
         return Field(self.uri, client=self.client, entries=d)
+
+class Field(core.InstanceResource):
+    """ A Field resource """
+
+    def __init__(self, uri, entries={}, **kwargs):
+        super(Field, self).__init__(uri, entries=entries, **kwargs)
+
 
 class Widgets(core.ListResource):
     """ A Wufoo Widgets resource """
