@@ -186,6 +186,11 @@ class InstanceResource(Resource):
     def __init__(self, uri, entries={}, **kwargs):
         super(InstanceResource, self).__init__(uri, **kwargs)
         result = {}
+
+        # Booleans should be booleans
+        for key in ["IsRequired", "Success"]:
+            if key in entries:
+                entries[key] = entries[key] == "1" or entries[key] == 1
         
         # Load the entries into the object
         for key in entries.keys():

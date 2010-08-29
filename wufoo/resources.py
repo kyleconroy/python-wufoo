@@ -1,8 +1,11 @@
-import json
 import logging
 import re
-
 from wufoo import core
+
+try:
+    from django.utils import simplejson as json
+except:
+    import json
 
 class Forms(core.ListResource):
     """ A list of Form resources """
@@ -125,6 +128,10 @@ class Entries(core.ListResource):
         content = json.loads(self._get("/count"))
         return content["EntryCount"]
 
+    def create(self, values):
+        content = json.loads(self._post(body=values))
+        # Load a generic resource, not an Entry
+        return super(Entries, self)._load_instance(content)
  
 
 
