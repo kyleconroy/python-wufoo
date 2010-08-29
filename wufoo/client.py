@@ -1,4 +1,3 @@
-import httplib2
 import logging
 from wufoo.core import Client
 from wufoo.resources import *
