@@ -1,6 +1,4 @@
-import httplib2
 import itertools
-import json
 import logging
 import os
 import re
